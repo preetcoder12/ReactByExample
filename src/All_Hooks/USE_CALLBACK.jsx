@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Button = React.memo(({ onClick, children }) => {
   console.log("Button rendered:", children);
@@ -19,13 +20,18 @@ const USE_CALLBACK = () => {
 
   // Track component renders
   React.useEffect(() => {
-    setRenderCount(prev => prev + 1);
+    setRenderCount((prev) => prev + 1);
   });
 
   // ✅ useCallback to memoize the increment function
   const increment = useCallback(() => {
     setCount((prev) => prev + 1);
   }, []);
+
+  const navigate = useNavigate();
+  const handlehome = () => {
+    navigate("/");
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-hidden">
@@ -36,7 +42,6 @@ const USE_CALLBACK = () => {
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-indigo-500 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-pulse delay-2000"></div>
         <div className="absolute top-1/4 right-1/4 w-60 h-60 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-bounce"></div>
       </div>
-
       {/* Floating particles */}
       <div className="fixed inset-0 pointer-events-none">
         {[...Array(15)].map((_, i) => (
@@ -52,8 +57,13 @@ const USE_CALLBACK = () => {
           />
         ))}
       </div>
-
-      {/* Header Section */}
+      <button
+        className="bg-red-600 text-white  m-4 px-4 py-2 rounded-xl hover:bg-red-700 transition duration-300"
+        onClick={handlehome}
+      >
+        Home
+      </button>
+      ;{/* Header Section */}
       <div className="relative z-10 pt-12 pb-8">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-12 animate-fadeInUp">
@@ -63,7 +73,8 @@ const USE_CALLBACK = () => {
               </h1>
             </div>
             <p className="text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed animate-fadeInUp delay-300">
-              Optimize performance by memoizing functions and preventing unnecessary re-renders
+              Optimize performance by memoizing functions and preventing
+              unnecessary re-renders
             </p>
           </div>
 
@@ -77,8 +88,9 @@ const USE_CALLBACK = () => {
             </h2>
             <div className="space-y-6 text-slate-300">
               <p className="text-lg leading-relaxed">
-                useCallback is a React Hook that returns a memoized (cached) version of a function, 
-                so the function is not re-created on every render — unless its dependencies change.
+                useCallback is a React Hook that returns a memoized (cached)
+                version of a function, so the function is not re-created on
+                every render — unless its dependencies change.
               </p>
 
               <div className="bg-slate-900/60 border border-slate-600/50 rounded-2xl p-6 font-mono text-sm backdrop-blur-sm hover:border-purple-500/50 transition-colors duration-300">
@@ -92,12 +104,12 @@ const USE_CALLBACK = () => {
                     <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                   </div>
                 </div>
-                <div className="text-purple-400">const memoizedFunction = useCallback</div>
+                <div className="text-purple-400">
+                  const memoizedFunction = useCallback
+                </div>
                 <span className="text-white">(</span>
                 <span className="text-yellow-400">() =&gt; {`{`}</span>
-                <div className="ml-4 text-slate-300 py-1">
-                  // your code
-                </div>
+                <div className="ml-4 text-slate-300 py-1">// your code</div>
                 <span className="text-yellow-400">{`}`}</span>
                 <span className="text-white">, [</span>
                 <span className="text-orange-400">dependencies</span>
@@ -105,17 +117,41 @@ const USE_CALLBACK = () => {
               </div>
 
               <div className="bg-gradient-to-r from-purple-500/10 to-pink-500/10 p-6 rounded-2xl border border-purple-500/20">
-                <h3 className="text-purple-400 font-semibold text-lg mb-3">🧠 Why use useCallback?</h3>
+                <h3 className="text-purple-400 font-semibold text-lg mb-3">
+                  🧠 Why use useCallback?
+                </h3>
                 <div className="space-y-2 text-sm">
-                  <p>• <span className="text-yellow-400">Functions get recreated:</span> Every time a component re-renders</p>
-                  <p>• <span className="text-blue-400">Causes problems:</span> When passed to child components (unnecessary re-renders)</p>
-                  <p>• <span className="text-pink-400">Preserves identity:</span> Function identity between renders</p>
-                  <p>• <span className="text-green-400">Optimizes performance:</span> Only creates new function when dependencies change</p>
+                  <p>
+                    •{" "}
+                    <span className="text-yellow-400">
+                      Functions get recreated:
+                    </span>{" "}
+                    Every time a component re-renders
+                  </p>
+                  <p>
+                    • <span className="text-blue-400">Causes problems:</span>{" "}
+                    When passed to child components (unnecessary re-renders)
+                  </p>
+                  <p>
+                    • <span className="text-pink-400">Preserves identity:</span>{" "}
+                    Function identity between renders
+                  </p>
+                  <p>
+                    •{" "}
+                    <span className="text-green-400">
+                      Optimizes performance:
+                    </span>{" "}
+                    Only creates new function when dependencies change
+                  </p>
                 </div>
               </div>
 
               <p className="text-lg leading-relaxed bg-gradient-to-r from-cyan-500/10 to-teal-500/10 p-4 rounded-2xl border border-cyan-500/20">
-                It only creates a new version of the function if something in <code className="text-orange-400 bg-slate-800/50 px-2 py-1 rounded">[dependencies]</code> changes.
+                It only creates a new version of the function if something in{" "}
+                <code className="text-orange-400 bg-slate-800/50 px-2 py-1 rounded">
+                  [dependencies]
+                </code>{" "}
+                changes.
               </p>
             </div>
           </div>
@@ -131,7 +167,8 @@ const USE_CALLBACK = () => {
                   Example 1: Avoid Re-render
                 </h3>
                 <p className="text-purple-300">
-                  Watch how useCallback prevents unnecessary child component renders
+                  Watch how useCallback prevents unnecessary child component
+                  renders
                 </p>
               </div>
             </div>
@@ -141,20 +178,22 @@ const USE_CALLBACK = () => {
               <div className="space-y-6">
                 <div className="bg-slate-900/60 border border-slate-600/50 rounded-2xl p-6 backdrop-blur-sm">
                   <h4 className="text-white font-semibold text-lg mb-4 flex items-center">
-                    <span className="w-6 h-6 bg-purple-500 rounded-full mr-2 flex items-center justify-center text-sm">⚡</span>
+                    <span className="w-6 h-6 bg-purple-500 rounded-full mr-2 flex items-center justify-center text-sm">
+                      ⚡
+                    </span>
                     Interactive Controls
                   </h4>
-                  
+
                   <div className="space-y-4">
                     <div className="flex items-center justify-between p-4 bg-gradient-to-r from-purple-500/20 to-cyan-500/20 rounded-xl border border-purple-400/30">
                       <span className="text-white font-semibold">Count:</span>
-                      <span className="text-3xl font-bold text-purple-300">{count}</span>
+                      <span className="text-3xl font-bold text-purple-300">
+                        {count}
+                      </span>
                     </div>
-                    
-                    <Button onClick={increment}>
-                      Increment
-                    </Button>
-                    
+
+                    <Button onClick={increment}>Increment</Button>
+
                     <button
                       onClick={() => setOtherState(!otherState)}
                       className="w-full bg-gradient-to-r from-pink-500 to-purple-500 text-white px-6 py-3 rounded-xl font-semibold hover:from-pink-600 hover:to-purple-600 transition-all duration-300 transform hover:scale-105 shadow-lg"
@@ -166,17 +205,23 @@ const USE_CALLBACK = () => {
 
                 <div className="bg-slate-900/60 border border-slate-600/50 rounded-2xl p-6">
                   <h4 className="text-white font-semibold mb-3 flex items-center">
-                    <span className="w-6 h-6 bg-green-500 rounded-full mr-2 flex items-center justify-center text-sm">📊</span>
+                    <span className="w-6 h-6 bg-green-500 rounded-full mr-2 flex items-center justify-center text-sm">
+                      📊
+                    </span>
                     Performance Metrics
                   </h4>
                   <div className="space-y-3">
                     <div className="flex justify-between items-center p-3 bg-slate-800/50 rounded-lg">
                       <span className="text-slate-300">Component Renders:</span>
-                      <span className="text-green-400 font-bold">{renderCount}</span>
+                      <span className="text-green-400 font-bold">
+                        {renderCount}
+                      </span>
                     </div>
                     <div className="flex justify-between items-center p-3 bg-slate-800/50 rounded-lg">
                       <span className="text-slate-300">Other State:</span>
-                      <span className="text-cyan-400 font-bold">{otherState ? 'True' : 'False'}</span>
+                      <span className="text-cyan-400 font-bold">
+                        {otherState ? "True" : "False"}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -186,23 +231,35 @@ const USE_CALLBACK = () => {
               <div className="space-y-6">
                 <div className="bg-gradient-to-br from-green-500/20 to-teal-500/20 border border-green-400/30 rounded-2xl p-6 backdrop-blur-sm">
                   <h4 className="text-green-400 font-semibold text-lg mb-4 flex items-center">
-                    <span className="w-6 h-6 bg-green-500 rounded-full mr-2 flex items-center justify-center text-sm">✓</span>
+                    <span className="w-6 h-6 bg-green-500 rounded-full mr-2 flex items-center justify-center text-sm">
+                      ✓
+                    </span>
                     How it Works
                   </h4>
                   <div className="space-y-3 text-sm">
                     <div className="p-3 bg-green-500/10 rounded-lg border border-green-500/20">
                       <p className="text-green-300">
-                        <span className="font-semibold">✅ With useCallback:</span> The Button component only re-renders when absolutely necessary
+                        <span className="font-semibold">
+                          ✅ With useCallback:
+                        </span>{" "}
+                        The Button component only re-renders when absolutely
+                        necessary
                       </p>
                     </div>
                     <div className="p-3 bg-blue-500/10 rounded-lg border border-blue-500/20">
                       <p className="text-blue-300">
-                        <span className="font-semibold">🎯 Memoized Function:</span> increment function keeps same reference across renders
+                        <span className="font-semibold">
+                          🎯 Memoized Function:
+                        </span>{" "}
+                        increment function keeps same reference across renders
                       </p>
                     </div>
                     <div className="p-3 bg-purple-500/10 rounded-lg border border-purple-500/20">
                       <p className="text-purple-300">
-                        <span className="font-semibold">🚀 Performance Boost:</span> Child components avoid unnecessary re-renders
+                        <span className="font-semibold">
+                          🚀 Performance Boost:
+                        </span>{" "}
+                        Child components avoid unnecessary re-renders
                       </p>
                     </div>
                   </div>
@@ -210,14 +267,20 @@ const USE_CALLBACK = () => {
 
                 <div className="bg-slate-900/60 border border-slate-600/50 rounded-2xl p-6">
                   <h4 className="text-white font-semibold mb-3 flex items-center">
-                    <span className="w-6 h-6 bg-yellow-500 rounded-full mr-2 flex items-center justify-center text-sm">💡</span>
+                    <span className="w-6 h-6 bg-yellow-500 rounded-full mr-2 flex items-center justify-center text-sm">
+                      💡
+                    </span>
                     Try This
                   </h4>
                   <div className="space-y-2 text-sm text-slate-300">
                     <p>1. Click "Increment" - Button renders (count changed)</p>
-                    <p>2. Click "Toggle Other State" - Button doesn't render!</p>
+                    <p>
+                      2. Click "Toggle Other State" - Button doesn't render!
+                    </p>
                     <p>3. Check console for "Button rendered:" messages</p>
-                    <p>4. Notice how useCallback prevents unnecessary renders</p>
+                    <p>
+                      4. Notice how useCallback prevents unnecessary renders
+                    </p>
                   </div>
                 </div>
               </div>
@@ -236,21 +299,36 @@ const USE_CALLBACK = () => {
                 </div>
               </div>
               <div className="space-y-2">
-                <div className="text-gray-400">// Memoized Button component</div>
-                <div className="text-cyan-400">const Button = React.memo(({`{`}onClick, children{`}`}) =&gt; {`{`}</div>
-                <div className="ml-4 text-slate-300">console.log("Button rendered:", children);</div>
-                <div className="ml-4 text-yellow-400">return &lt;button onClick={`{`}onClick{`}`}&gt;{`{`}children{`}`}&lt;/button&gt;;</div>
+                <div className="text-gray-400">
+                  // Memoized Button component
+                </div>
+                <div className="text-cyan-400">
+                  const Button = React.memo(({`{`}onClick, children{`}`}) =&gt;{" "}
+                  {`{`}
+                </div>
+                <div className="ml-4 text-slate-300">
+                  console.log("Button rendered:", children);
+                </div>
+                <div className="ml-4 text-yellow-400">
+                  return &lt;button onClick={`{`}onClick{`}`}&gt;{`{`}children
+                  {`}`}&lt;/button&gt;;
+                </div>
                 <div className="text-cyan-400">{`}`});</div>
-                <div className="mt-4 text-gray-400">// useCallback to memoize function</div>
-                <div className="text-purple-400">const increment = useCallback(() =&gt; {`{`}</div>
-                <div className="ml-4 text-slate-300">setCount((prev) =&gt; prev + 1);</div>
+                <div className="mt-4 text-gray-400">
+                  // useCallback to memoize function
+                </div>
+                <div className="text-purple-400">
+                  const increment = useCallback(() =&gt; {`{`}
+                </div>
+                <div className="ml-4 text-slate-300">
+                  setCount((prev) =&gt; prev + 1);
+                </div>
                 <div className="text-purple-400">{`}`}, []);</div>
               </div>
             </div>
           </div>
         </div>
       </div>
-
       <style jsx>{`
         .delay-1000 {
           animation-delay: 1s;

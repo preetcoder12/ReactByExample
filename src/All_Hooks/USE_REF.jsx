@@ -20,8 +20,10 @@ const USE_REF = () => {
     field.current.style.background = "";
     field.current.style.color = "";
   };
-
-
+  const navigate = useNavigate();
+  const handlehome = () => {
+    navigate("/");
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-hidden">
@@ -32,7 +34,6 @@ const USE_REF = () => {
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-pulse delay-2000"></div>
         <div className="absolute top-1/4 right-1/4 w-60 h-60 bg-emerald-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-bounce"></div>
       </div>
-
       {/* Floating particles */}
       <div className="fixed inset-0 pointer-events-none">
         {[...Array(20)].map((_, i) => (
@@ -47,9 +48,14 @@ const USE_REF = () => {
             }}
           />
         ))}
-      </div>
-
-      {/* Header Section */}
+      </div>{" "}
+      <button
+        className="bg-red-600 text-white  m-4 px-4 py-2 rounded-xl hover:bg-red-700 transition duration-300"
+        onClick={handlehome}
+      >
+        Home
+      </button>
+      ;{/* Header Section */}
       <div className="relative z-10 pt-12 pb-8">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-12 animate-fadeInUp">
@@ -337,7 +343,6 @@ const USE_REF = () => {
           </div>
         </div>
       </div>
-
       <style jsx>{`
         .delay-1000 {
           animation-delay: 1s;
